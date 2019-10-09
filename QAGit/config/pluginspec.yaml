@@ -1,0 +1,40 @@
+# This is default sample specification
+# Feel free to change it
+# Call flowpdk showdoc pluginspec to see the list of available fields and their description
+pluginName: 'QAGit'
+version: '1.0.0'
+description: 'description'
+author: 'qa'
+authorUrl: 'abc'
+category: 'Utilities'
+
+# REST-backed plugin configuration
+configuration:
+  checkConnection: true
+  rest:
+    endpointLabel: 'My REST Endpoint'
+    checkConnectionUri: '/user'
+    headers:
+      Accept: 'application/json'
+    authSchemes:
+      basic:
+        userNameLabel: 'Username'
+        passwordLabel: 'Password'
+        description: 'Username and password to connect to ...'
+      bearer:
+        passwordLabel: 'TestRail token'
+        description: 'testrail token for access'
+        prefix: Bearer
+  hasProxySupport: true
+  hasDebugLevel: true
+
+procedures:
+-
+  name: 'Get User Info'
+  description:  'Get User Info'
+  hasConfig: true
+  shell: 'ec-perl'
+  rest:
+    url: '/user'
+    methodName: 'getGitUserInfo'
+    httpMethod: 'GET'
