@@ -1,0 +1,85 @@
+# This is default sample specification
+# Feel free to change it
+# Call flowpdk showdoc pluginspec to see the list of available fields and their description
+pluginName: 'QABamboo'
+version: '1.0.0'
+description: 'qa copy of EC-Bamboo'
+author: 'QA'
+authorUrl: 'https://bamboo'
+category: 'Build'
+
+# REST-backed plugin configuration
+configuration:
+  checkConnection: true
+  rest:
+    endpointLabel: 'My REST Endpoint'
+    checkConnectionUri: '/user'
+    headers:
+      Accept: 'application/json'
+    authSchemes:
+      basic:
+        userNameLabel: 'Username'
+        passwordLabel: 'Password'
+        description: 'Username and password to connect to ...'
+  hasProxySupport: true
+  hasDebugLevel: true
+
+procedures:
+-
+  name: 'Sample REST Procedure'
+  description: 'This procedure demonstrates a simple REST call'
+  hasConfig: true
+  shell: 'ec-perl'
+  parameters:
+  -
+    name: username
+    documentation: Sample parameter
+    required: true
+    type: entry
+    label: Username
+    rest:
+      in: path
+  # Connects REST endpoint to the plugin procedure
+  rest:
+    url: '/user'
+    methodName: 'getUser'
+    httpMethod: 'GET'
+features:
+  # The reporting configuration, will generate a procedure and a bunch of configuration scripts required for DOIS to work
+  devopsInsight:
+    sourceName: 'QABamboo'
+    supportedPayloads:
+    -
+      name: 'build'
+      parameters:
+      -
+        name: projectKey
+        documentation: null
+        required: true
+        type: entry
+        label: Project Key
+      -
+        name: planKey
+        documentation: null
+        required: false
+        type: entry
+        label: Plan Key
+      -
+        name: retrieveTestResults
+        documentation: null
+        required: false
+        type: checkbox
+        label: Retrieve Test Results?
+      -
+        name: testCategory
+        documentation: null
+        required: false
+        type: entry
+        label: Test Category
+      -
+        name: initialRecordsCount
+        documentation: null
+        required: false
+        type: entry
+        label: Initial Count       
+    # The name of the source as it will appear in the dashboards
