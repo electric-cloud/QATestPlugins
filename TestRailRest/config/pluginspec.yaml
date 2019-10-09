@@ -1,0 +1,120 @@
+# This is default sample specification
+# Feel free to change it
+# Call flowpdk showdoc pluginspec to see the list of available fields and their description
+pluginName: 'TestRailRest'
+version: '1.0.0'
+description: 'for creation tests cases'
+author: 'Ed Serbin'
+authorUrl: 'https://ecflow.testrail.net'
+category: 'Utilities'
+
+# REST-backed plugin configuration
+configuration:
+  checkConnection: true
+  rest:
+    endpointLabel: 'TestRail Endpoint'
+    checkConnectionUri: '/user'
+    defaultEndpointValue: 'https://ecflow.testrail.net'
+    headers:
+      Accept: 'application/json'
+    authSchemes:
+      basic:
+        userNameLabel: 'Username'
+        passwordLabel: 'Password'
+        description: 'Username and password to connect to ...'
+      # bearer:
+      #   passwordLabel: 'TestRail token'
+      #   description: 'testrail token for access'
+      #   prefix: Bearer
+      # oauth1:
+      #   tokenLabel: token
+      #   signatureMethod: RSA-SHA1
+      # custom:
+      #   dropdownLabel: 'Token'
+      #   dropdownValue: 'token'
+      #   name: 'token'
+      #   parameters:
+      #     - name: token_credential
+      #       type: credential
+      #     - name: prefix
+      #       type: entry
+  hasProxySupport: true
+  hasDebugLevel: true
+
+procedures:
+- name: Get Test Case
+  description: The gettign the Test Case from Test Rail as JSON
+  hasConfig: true # configuration field will be generated automatically
+  parameters:
+  - name: caseId
+    documentation: Target Case Id in the Test Rail for Update or Create
+    type: entry
+    required: true
+    label: Case Id in the Test Rail
+    rest:
+      in: path
+  outputParameters:
+    caseJSON: case as JSON
+    caseId: Id of created/updated test case on TestRail, if exist
+  # Steps are not defined so we assume that this is one-step procedure with a single step named Deploy
+  shell: ec-perl
+  rest:
+    methodName: getTestCase
+    httpMethod: GET
+    url: '/get_case/{{caseId}}'
+    contentType: application/json
+- name: Create Test Case
+  description: The procedure take a JSON and import it to Test Rail as Test Case
+  hasConfig: true # configuration field will be generated automatically
+  parameters:
+  - name: json
+    documentation: JSON of the Test Case
+    type: textarea
+    required: true
+    label: JSON Value
+    rest: 
+      in: body
+  - name: sectionId
+    documentation: Id of section in Test Rail for adding the Test Case
+    type: entry
+    required: true
+    label: Section Id
+    rest:
+      in: path
+  outputParameters:
+    caseId: Id of created/updated test case on TestRail
+    caseJSON: case as JSON
+  shell: ec-perl
+  rest:
+    methodName: createTest
+    httpMethod: POST
+    url: '/add_case/{{sectionId}}'
+    contentType: application/json
+- name: Update Test Case
+  description: The procedure take a JSON and update Case in Test Rail
+  hasConfig: true 
+  parameters:
+  - name: caseId
+    documentation: Target Case Id in the Test Rail for Update or Create
+    type: entry
+    required: true
+    label: Case Id in the Test Rail
+    rest:
+      in: path
+  - name: json
+    documentation: JSON of the Test Case
+    type: textarea
+    required: true
+    label: JSON Value
+    rest:
+      in: body
+  outputParameters:
+    caseId: Id of created/updated test case on TestRail
+    caseJSON: case as JSON
+  # Steps are not defined so we assume that this is one-step procedure with a single step named Deploy
+  shell: ec-perl
+  rest:
+    methodName: updateTest
+    httpMethod: POST
+    url: '/update_case/{{caseId}}'
+    contentType: application/json      
