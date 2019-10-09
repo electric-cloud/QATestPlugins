@@ -1,0 +1,43 @@
+# This is default sample specification
+# Feel free to change it
+# Call flowpdk showdoc pluginspec to see the list of available fields and their description
+pluginName: 'QAJIRA'
+version: '1.0.0'
+description: 'description'
+author: 'qa'
+authorUrl: 'abc'
+category: 'Utilities'
+
+# REST-backed plugin configuration
+configuration:
+  checkConnection: true
+  rest:
+    endpointLabel: 'My REST Endpoint'
+    checkConnectionUri: '/user'
+    headers:
+      Accept: 'application/json'
+    authSchemes:
+      basic:
+        userNameLabel: 'Username'
+        passwordLabel: 'Password'
+        description: 'Username and password to connect to ...'
+      oauth1:
+        tokenLabel: token
+        signatureMethod: RSA-SHA1
+      bearer:
+        passwordLabel: 'TestRail token'
+        description: 'testrail token for access'
+        prefix: Bearer
+  hasProxySupport: true
+  hasDebugLevel: true
+
+procedures:
+-
+  name: 'Get Issue Types'
+  description: 'Get issues types'
+  hasConfig: true
+  shell: 'ec-perl'
+  rest:
+    url: '/rest/api/latest/issuetype'
+    methodName: 'getIssueTypes'
+    httpMethod: 'GET'
