@@ -1,0 +1,53 @@
+pluginInfo:
+  # This is default sample specification
+  # Feel free to change it
+  # Call flowpdk showdoc pluginspec to see the list of available fields and their description
+  pluginName: 'QA-GroovyGit'
+  version: '1.0.0'
+  description: 'plugin for git'
+  author: 'Ed Serbin'
+  supportUrl: 'github.com'
+  category: 'Utilities'
+
+# Plugin configuration description
+configuration:
+  # This is a declaration for the plugin configuration
+  shell: 'ec-perl'
+  # A set of fields will be added to process debug level in the configuration
+  hasDebugLevel: true
+  parameters:
+  - name: authScheme
+    type: entry
+    label: authScheme
+    value: bearer    
+  -
+    name: config
+    documentation: The name for the created configuration
+    required: true
+    type: entry
+    label: Configuration Name
+  -
+    name: desc
+    documentation: Description for the configuration
+    required: false
+    type: null
+    label: Description
+  -
+    name: endpoint
+    documentation: Third-party endpoint to connect to.
+    required: false
+    type: entry
+    label: null
+  -
+    name: credential
+    documentation: A sample credential
+    required: false
+    type: entry
+    label: bearer
+
+procedures:
+-
+  name: 'Get User Info'
+  description:  'Get User Info'
+  hasConfig: true
+  shell: 'ec-perl'
