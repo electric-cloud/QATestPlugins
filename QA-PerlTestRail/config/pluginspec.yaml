@@ -1,0 +1,312 @@
+pluginInfo:
+  # This is default sample specification
+  # Feel free to change it
+  # Call flowpdk showdoc pluginspec to see the list of available fields and their description
+  pluginName: 'QA-PerlTestRail'
+  version: '1.0.0'
+  description: 'perl plugin for integration with TestRail'
+  author: 'Ed Serbin'
+  supportUrl: 'https://ecflow.testrail.net'
+  category: 'Utilities'
+
+# REST-backed plugin configuration
+configuration:
+  checkConnection: true
+  restConfigInfo:
+    endpointLabel: 'Endpoint'
+    endpointDescription: 'Example: https://ecflow.testrail.net/index.php?/api/v2'
+    defaultEndpointValue: https://ecflow.testrail.net/index.php?/api/v2
+    checkConnectionUri: '/api/v2/get_statuses'
+    headers:
+      Accept: 'application/json'
+    authSchemes:
+      basic:
+        userNameLabel: 'Username'
+        passwordLabel: 'Password'
+        description: 'Username and password to connect to TestRail'
+        credentialLabel: TestRail credentials
+  hasProxySupport: true
+  hasDebugLevel: true
+
+procedures:
+-
+  name: 'Get Test Case'
+  description: 'he getting the Test Case from Test Rail as JSON'
+  hasConfig: true
+  shell: 'ec-perl'
+  parameters:
+  -
+    name: caseId
+    documentation: Target Case Id in the Test Rail for Update or Create
+    required: true
+    type: entry
+    label: Case Id in the Test Rail
+    restParamInfo:
+      in: path
+  outputParameters:
+  -
+    name: caseJSON
+    description: case as JSON
+    isRestOutputParam: true
+  -
+    name: caseId  
+    description: Id of created/updated test case on TestRail, if exist    
+  # Connects REST endpoint to the plugin procedure
+  restProcedureInfo:
+    url: '/get_case/{{caseId}}'
+    contentType: application/json
+    methodName: 'getTestCase'
+    httpMethod: 'GET'
+-
+  name: 'Create Test Case'
+  description: 'The procedure take a JSON and import it to Test Rail as Test Case'
+  hasConfig: true
+  shell: 'ec-perl'
+  parameters:
+  -
+    name: title
+    documentation: title of the Test Case
+    required: true
+    type: entry
+    label: Title
+    restParamInfo:
+      in: body
+  -
+    name: template_id
+    documentation: Template id, e.g. 2
+    required: true
+    type: entry
+    label: Template id
+    restParamInfo:
+      in: body
+  -
+    name: type_id
+    documentation: Type id, e.g. 6
+    required: true
+    type: entry
+    label: Type id
+    restParamInfo:
+      in: body                  
+  -
+    name: priority_id
+    documentation: Priority id, e.g. 2
+    required: true
+    type: entry
+    label: Priority id
+    restParamInfo:
+      in: body       
+  -
+    name: estimate
+    documentation: estimate
+    required: false
+    type: entry
+    label: Estimate
+    restParamInfo:
+      in: body   
+  -
+    name: refs
+    documentation: refs
+    required: false
+    type: entry
+    label: refs
+    restParamInfo:
+      in: body 
+  -
+    name: content
+    documentation: step content
+    required: true
+    type: textarea
+    label: Step content
+    restParamInfo:
+      in: body       
+  -
+    name: expected
+    documentation: expected result
+    required: true
+    type: textarea
+    label: Expected result
+    restParamInfo:
+      in: body                         
+  -
+    name: sectionId
+    documentation: Section Id
+    required: true
+    type: entry
+    label: sectionId
+    restParamInfo:
+      in: path
+  outputParameters:
+  -
+    name: caseJSON
+    description: case as JSON
+    isRestOutputParam: true
+  -
+    name: caseId  
+    description: Id of created/updated test case on TestRail, if exist    
+  # Connects REST endpoint to the plugin procedure
+  restProcedureInfo:
+    url: '/add_case/{{sectionId}}'
+    contentType: application/json
+    methodName: 'createTest'
+    httpMethod: 'POST'
+
+-
+  name: 'Update Test Case'
+  description: 'The procedure take a JSON and update Case in Test Rail'
+  hasConfig: true
+  shell: 'ec-perl'
+  parameters:
+  -
+    name: title
+    documentation: title of the Test Case
+    required: true
+    type: entry
+    label: Title
+    restParamInfo:
+      in: body
+  -
+    name: template_id
+    documentation: Template id, e.g. 2
+    required: true
+    type: entry
+    label: Template id
+    restParamInfo:
+      in: body
+  -
+    name: type_id
+    documentation: Type id, e.g. 6
+    required: true
+    type: entry
+    label: Type id
+    restParamInfo:
+      in: body                  
+  -
+    name: priority_id
+    documentation: Priority id, e.g. 2
+    required: true
+    type: entry
+    label: Priority id
+    restParamInfo:
+      in: body       
+  -
+    name: estimate
+    documentation: estimate
+    required: false
+    type: entry
+    label: Estimate
+    restParamInfo:
+      in: body   
+  -
+    name: refs
+    documentation: refs
+    required: false
+    type: entry
+    label: refs
+    restParamInfo:
+      in: body 
+  -
+    name: content
+    documentation: step content
+    required: true
+    type: textarea
+    label: Step content
+    restParamInfo:
+      in: body       
+  -
+    name: expected
+    documentation: expected result
+    required: true
+    type: textarea
+    label: Expected result
+    restParamInfo:
+      in: body      
+  -
+    name: caseId
+    documentation: Target Case Id in the Test Rail for Update or Create
+    required: true
+    type: entry
+    label: caseId
+    restParamInfo:
+      in: path
+  outputParameters:
+  -
+    name: caseJSON
+    description: case as JSON
+    isRestOutputParam: true
+  -
+    name: caseId  
+    description: Id of created/updated test case on TestRail, if exist    
+  # Connects REST endpoint to the plugin procedure
+  restProcedureInfo:
+    url: '/update_case/{{caseId}}'
+    contentType: application/json
+    methodName: updateTest
+    httpMethod: 'POST'
+
+- 
+  name: Get Test Case CLI
+  description: The getting the Test Case from Test Rail as JSON via CLI
+  hasConfig: true # configuration field will be generated automatically
+  parameters:
+    - name: caseId
+      documentation: Target Case Id in the Test Rail for Update or Create
+      type: entry
+      required: true
+      label: Case Id in the Test Rail
+  outputParameters:
+    caseJSON: case as JSON
+    caseId: Id of created/updated test case on TestRail, if exist
+  # Steps are not defined so we assume that this is one-step procedure with a single step named Deploy
+  shell: ec-perl
+- 
+  name: Create Test Case CLI
+  description: The procedure take a JSON and import it to Test Rail as Test Case via CLI
+  hasConfig: true # configuration field will be generated automatically
+  parameters:
+    - name: json
+      documentation: JSON of the Test Case
+      type: textarea
+      required: true
+      label: JSON Value
+    - name: sectionId
+      documentation: Id of section in Test Rail for adding the Test Case
+      type: entry
+      required: true
+      label: Section Id
+  outputParameters:
+    caseId: Id of created/updated test case on TestRail
+    caseJSON: case as JSON
+  # Steps are not defined so we assume that this is one-step procedure with a single step named Deploy
+  shell: ec-perl
+- 
+  name: Update Test Case CLI
+  description: The procedure take a JSON and update Case in Test Rail via CLI
+  hasConfig: true # configuration field will be generated automatically
+  parameters:
+    - name: caseId
+      documentation: Target Case Id in the Test Rail for Update or Create
+      type: entry
+      required: true
+      label: Case Id in the Test Rail
+    - name: json
+      documentation: JSON of the Test Case
+      type: textarea
+      required: true
+      label: JSON Value
+  outputParameters:
+    caseId: Id of created/updated test case on TestRail
+    caseJSON: case as JSON
+  # Steps are not defined so we assume that this is one-step procedure with a single step named Deploy
+  shell: ec-perl
+
+
+restClient:
+  language: perl
+  userAgent: QA plugin
+  endpoints: 
+  -
+    httpMethod: GET
+    methodName: getProjects
+    url: '/api/v2/get_projects'
+    contentType: application/json
+

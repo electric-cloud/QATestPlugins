@@ -1,0 +1,79 @@
+<!--
+    This form is generated automatically from the parameters pluginspec.
+    Please not not edit this file manually as it will be regenerated.
+-->
+<editor>
+  <help>/commander/pages/@PLUGIN_NAME@/help?s=Administration&amp;ss=Plugins#UpdateTestCase</help>
+  <formElement>
+    <type>entry</type>
+    <property>config</property>
+    <configuration>1</configuration>
+    <propertyReference>/plugins/@PLUGIN_NAME@/project/ec_plugin_cfgs</propertyReference>
+    <required>1</required>
+    <documentation>Previously defined configuration for the plugin</documentation>
+    <label>Configuration Name:</label>
+  </formElement>
+  <formElement>
+    <type>entry</type>
+    <property>title</property>
+    <required>1</required>
+    <documentation>title of the Test Case</documentation>
+    <label>Title:</label>
+  </formElement>
+  <formElement>
+    <type>entry</type>
+    <property>template_id</property>
+    <required>1</required>
+    <documentation>Template id, e.g. 2</documentation>
+    <label>Template id:</label>
+  </formElement>
+  <formElement>
+    <type>entry</type>
+    <property>type_id</property>
+    <required>1</required>
+    <documentation>Type id, e.g. 6</documentation>
+    <label>Type id:</label>
+  </formElement>
+  <formElement>
+    <type>entry</type>
+    <property>priority_id</property>
+    <required>1</required>
+    <documentation>Priority id, e.g. 2</documentation>
+    <label>Priority id:</label>
+  </formElement>
+  <formElement>
+    <type>entry</type>
+    <property>estimate</property>
+    <required>0</required>
+    <documentation>estimate</documentation>
+    <label>Estimate:</label>
+  </formElement>
+  <formElement>
+    <type>entry</type>
+    <property>refs</property>
+    <required>0</required>
+    <documentation>refs</documentation>
+    <label>refs:</label>
+  </formElement>
+  <formElement>
+    <type>textarea</type>
+    <property>content</property>
+    <required>1</required>
+    <documentation>step content</documentation>
+    <label>Step content:</label>
+  </formElement>
+  <formElement>
+    <type>textarea</type>
+    <property>expected</property>
+    <required>1</required>
+    <documentation>expected result</documentation>
+    <label>Expected result:</label>
+  </formElement>
+  <formElement>
+    <type>entry</type>
+    <property>caseId</property>
+    <required>1</required>
+    <documentation>Target Case Id in the Test Rail for Update or Create</documentation>
+    <label>caseId:</label>
+  </formElement>
+</editor>
