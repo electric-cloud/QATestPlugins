@@ -1,0 +1,40 @@
+pluginInfo:
+  # This is default sample specification
+  # Feel free to change it
+  # Call flowpdk showdoc pluginspec to see the list of available fields and their description
+  pluginName: 'QA-PerlJira'
+  version: '1.0.0'
+  description: 'qa perl plugin for jira'
+  author: 'Ed Serbin'
+  supportUrl: 'https://jira'
+  category: 'Utilities'
+
+# REST-backed plugin configuration
+configuration:
+  checkConnection: true
+  restConfigInfo:
+    endpointLabel: 'My REST Endpoint'
+    checkConnectionUri: '/rest/api/latest/project'
+    headers:
+      Accept: 'application/json'
+    authSchemes:
+      oauth1:
+        tokenLabel: 'OAuth1 Token'
+        signatureMethod: 'RSA-SHA1'
+      basic:
+        userNameLabel: 'Username'
+        passwordLabel: 'Password'
+        description: 'Username and password to connect to ...'
+  hasProxySupport: true
+  hasDebugLevel: true
+
+procedures:
+-
+  name: 'Get Issue Types'
+  description: 'Get issues types'
+  hasConfig: true
+  shell: 'ec-perl'
+  restProcedureInfo:
+    url: '/rest/api/latest/issuetype'
+    methodName: 'getIssueTypes'
+    httpMethod: 'GET'
