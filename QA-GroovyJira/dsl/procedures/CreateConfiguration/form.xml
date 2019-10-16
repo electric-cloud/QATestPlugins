@@ -1,0 +1,83 @@
+<!--
+    This form is generated automatically from the parameters pluginspec.
+    Please not not edit this file manually as it will be regenerated.
+-->
+
+<editor>
+  <help>/commander/pages/@PLUGIN_NAME@/help?s=Administration&amp;ss=Plugins#CreateConfiguration</help>
+  <formElement>
+    <type>entry</type>
+    <property>authScheme</property>
+    <label>authScheme:</label>
+    <value>oauth1</value>
+  </formElement>
+  <formElement>
+    <type>entry</type>
+    <property>config</property>
+    <required>1</required>
+    <documentation>The name for the created configuration</documentation>
+    <label>Configuration Name:</label>
+  </formElement>
+  <formElement>
+    <type>entry</type>
+    <property>desc</property>
+    <required>0</required>
+    <documentation>Description for the configuration</documentation>
+    <label>Description:</label>
+  </formElement>
+  <formElement>
+    <type>entry</type>
+    <property>endpoint</property>
+    <required>0</required>
+    <documentation>Third-party endpoint to connect to.</documentation>
+  </formElement>
+<!--   <formElement>
+    <type>credential</type>
+    <property>credential</property>
+    <required>1</required>
+    <documentation>A sample credential</documentation>
+    <label>Credential:</label>
+    <attachedAsParameterToStep>createConfiguration</attachedAsParameterToStep>
+  </formElement> -->
+  <formElement>
+    <type>select</type>
+    <property>debugLevel</property>
+    <required>0</required>
+    <documentation>This option sets debug level for logs. If info is selected, only summary information will be shown, for debug, there will be some debug information and for trace the whole requests and responses will be shown.</documentation>
+    <label>Debug Level:</label>
+    <option>
+      <name>Info</name>
+      <value>0</value>
+    </option>
+    <option>
+      <name>Debug</name>
+      <value>1</value>
+    </option>
+    <option>
+      <name>Trace</name>
+      <value>2</value>
+    </option>
+    <value>0</value>
+  </formElement>
+  <formElement>
+    <type>entry</type>
+    <property>oauth1ConsumerKey</property>
+    <required>0</required>
+    <htmlDocumentation>A value used by the Flow Server to identify itself to the OAuth provider.</htmlDocumentation>
+    <label>Consumer Key:</label>
+    <condition>${authScheme} == "oauth1"</condition>
+    <dependsOn>authScheme</dependsOn>
+  </formElement>
+  <formElement>
+    <type>credential</type>
+    <property>oauth1_credential</property>
+    <required>0</required>
+    <htmlDocumentation>OAuth token and Private Key.</htmlDocumentation>
+    <documentation>OAuth token and Private Key.</documentation>
+    <label>OAuth 1.0 Credentials:</label>
+    <attachedAsParameterToStep>createConfiguration</attachedAsParameterToStep>
+    <credentialType>key</credentialType>
+    <dependsOn>authScheme</dependsOn>
+    <userNameLabel>token</userNameLabel>
+  </formElement>  
+</editor>
