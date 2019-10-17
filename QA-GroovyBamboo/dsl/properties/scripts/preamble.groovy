@@ -282,8 +282,8 @@ class BambooReporting extends Reporting {
                     launchedBy          : 'N/A',
                     jobName             : row['key'],
                     duration            : row['buildDuration'],
-                    tags                : row['labels'] ?: '',
-                    sourceUrl           : row['url'],
+                    // tags                : '',
+                    sourceUrl           : row['link']['href'],
             ]
 
             for (key in payload.keySet()){
@@ -295,9 +295,7 @@ class BambooReporting extends Reporting {
             log.info("procedure buildDataset created payload: ${payload}")
             dataset.newData(
                     reportObjectType: 'build',
-                    // TODO: compare with perl code
                       values: payload
-//                    values: [values: payload]
             )
         }
 
