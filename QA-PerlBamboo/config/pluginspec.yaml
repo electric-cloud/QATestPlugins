@@ -1,0 +1,151 @@
+pluginInfo:
+  # This is default sample specification
+  # Feel free to change it
+  # Call flowpdk showdoc pluginspec to see the list of available fields and their description
+  pluginName: 'QA-PerlBamboo'
+  version: '1.0.0'
+  description: 'test perl plugin for testing collect reporting data for Bamboo'
+  author: 'Ed Serbin'
+  supportUrl: 'atlassian.com'
+  category: 'Utilities'
+# The reporting configuration, will generate a procedure and a bunch of configuration scripts required for DOIS to work
+devOpsInsight:
+  supportedReports:
+  -
+    reportObjectType: 'build'
+    parameters:
+    -
+      name: projectKey
+      documentation: null
+      required: true
+      type: entry
+      label: Project Key
+    -
+      name: planKey
+      documentation: null
+      required: false
+      type: entry
+      label: Plan Key
+    -
+      name: retrieveTestResults
+      documentation: null
+      required: false
+      type: checkbox
+      label: Retrieve Test Results?
+    -
+      name: testCategory
+      documentation: null
+      required: false
+      type: entry
+      label: Test Category
+    -
+      name: initialRecordsCount
+      documentation: null
+      required: false
+      type: entry
+      label: Initial Count             
+  # The name of the source as it will appear in the dashboards
+  datasourceName: 'QABamboo'
+  generateValidationProcedure: true
+
+# REST-backed plugin configuration
+configuration:
+  checkConnection: true
+  restConfigInfo:
+    endpointLabel: 'My REST Endpoint'
+    checkConnectionUri: '/user'
+    headers:
+      Accept: 'application/json'
+    authSchemes:
+      basic:
+        userNameLabel: 'Username'
+        passwordLabel: 'Password'
+        description: 'Username and password to connect to ...'
+  hasProxySupport: true
+  hasDebugLevel: true
+
+procedures:
+-
+  name: 'Sample REST Procedure'
+  description: 'This procedure demonstrates a simple REST call'
+  hasConfig: true
+  shell: 'ec-perl'
+  parameters:
+  -
+    name: username
+    documentation: Sample parameter
+    required: true
+    type: entry
+    label: Username
+    restParamInfo:
+      in: path
+  # Connects REST endpoint to the plugin procedure
+  restProcedureInfo:
+    url: '/user'
+    methodName: 'getUser'
+    httpMethod: 'GET'
+-
+  name: 'Get Builds'
+  description: 'This procedure demonstrates a simple REST call'
+  hasConfig: true
+  shell: 'ec-perl'
+  parameters:
+  -
+    name: requestKey
+    documentation: Sample parameter
+    required: true
+    type: entry
+    label: Request Key
+    restParamInfo:
+      in: path
+  -
+    name: expand
+    documentation: Sample parameter
+    required: true
+    type: entry
+    label: Request Key
+    restParamInfo:
+      in: query
+  -
+    name: 'max-results'
+    documentation: Sample parameter
+    required: true
+    type: entry
+    label: Request Key
+    restParamInfo:
+      in: query
+  -
+    name: 'start-index'
+    documentation: Sample parameter
+    required: true
+    type: entry
+    label: Request Key
+    restParamInfo:
+      in: query
+                   
+  # Connects REST endpoint to the plugin procedure
+  restProcedureInfo:
+    url: /rest/api/latest/result/{{requestKey}}
+    methodName: getBuildResults
+    httpMethod: 'GET'
+
+restClient:
+  endpoints:
+  -
+    httpMethod: GET
+    methodName: getBuildsResults
+    url: /rest/api/latest/result/{{requestKey}}
+    parameters:
+    -
+      name: 'requestKey'
+      in: path
+    -
+      name: 'expand'
+      in: query
+    -
+      name: 'max-results'
+      in: query
+    -
+      name: 'start-index'
+      in: query      
+  language: perl
