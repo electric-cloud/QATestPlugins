@@ -3,6 +3,7 @@
 /build/
 */build/
 .assets/
+*/flowpdf-groovy-lib-1.0.0-SNAPSHOT.jar
 
 # Ignore Gradle GUI config
 gradle-app.setting
